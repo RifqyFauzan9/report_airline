@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class SubmitSection extends StatefulWidget {
@@ -41,7 +42,8 @@ class _SubmitSectionState extends State<SubmitSection> {
           TextFormField(readOnly: true, controller: _refFormController),
           const SizedBox(height: 16),
           DropdownButtonFormField<String>(
-            decoration: InputDecoration(labelText: 'Signed By / Unit'),
+            icon: Icon(CupertinoIcons.chevron_down),
+            decoration: InputDecoration(hintText: 'Signed By / Unit'),
             items: signers
                 .map(
                   (value) => DropdownMenuItem(value: value, child: Text(value)),

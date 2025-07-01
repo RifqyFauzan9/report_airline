@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class ApuFakFormSection extends StatefulWidget {
@@ -35,6 +36,7 @@ class _ApuFakFormSectionState extends State<ApuFakFormSection> {
           Text('APU Status', style: fieldLabelStyle),
           const SizedBox(height: 8),
           DropdownButtonFormField(
+            icon: Icon(CupertinoIcons.chevron_down),
             value: selectedItem,
             items: ['Serviceable', 'Unserviceable'].map((serv) {
               return DropdownMenuItem(value: serv, child: Text(serv));
@@ -54,7 +56,7 @@ class _ApuFakFormSectionState extends State<ApuFakFormSection> {
                 child: TextFormField(
                   controller: _fakMwController,
                   textInputAction: TextInputAction.next,
-                  decoration: InputDecoration(labelText: 'F.A.K M/W (EA)'),
+                  decoration: InputDecoration(hintText: 'F.A.K M/W (EA)'),
                   keyboardType: TextInputType.number,
                 ),
               ),
@@ -63,7 +65,7 @@ class _ApuFakFormSectionState extends State<ApuFakFormSection> {
                 child: TextFormField(
                   controller: _fakNwController,
                   textInputAction: TextInputAction.done,
-                  decoration: InputDecoration(labelText: 'F.A.K N/W (EA)'),
+                  decoration: InputDecoration(hintText: 'F.A.K N/W (EA)'),
                   keyboardType: TextInputType.number,
                 ),
               ),

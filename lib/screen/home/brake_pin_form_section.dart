@@ -40,7 +40,7 @@ class _BrakePinFormSectionState extends State<BrakePinFormSection> {
               Expanded(
                 child: TextFormField(
                   controller: _pin1Controller,
-                  decoration: InputDecoration(labelText: 'Pin 1 (mm)'),
+                  decoration: InputDecoration(hintText: 'Pin 1 (mm)'),
                   textInputAction: TextInputAction.next,
                   keyboardType: TextInputType.number,
                 ),
@@ -49,7 +49,7 @@ class _BrakePinFormSectionState extends State<BrakePinFormSection> {
               Expanded(
                 child: TextFormField(
                   controller: _pin2Controller,
-                  decoration: InputDecoration(labelText: 'Pin 2 (mm)'),
+                  decoration: InputDecoration(hintText: 'Pin 2 (mm)'),
                   keyboardType: TextInputType.number,
                   textInputAction: TextInputAction.next,
                 ),
@@ -62,7 +62,7 @@ class _BrakePinFormSectionState extends State<BrakePinFormSection> {
               Expanded(
                 child: TextFormField(
                   controller: _pin3Controller,
-                  decoration: InputDecoration(labelText: 'Pin 3 (mm)'),
+                  decoration: InputDecoration(hintText: 'Pin 3 (mm)'),
                   keyboardType: TextInputType.number,
                   textInputAction: TextInputAction.next,
                 ),
@@ -71,7 +71,7 @@ class _BrakePinFormSectionState extends State<BrakePinFormSection> {
               Expanded(
                 child: TextFormField(
                   controller: _pin4Controller,
-                  decoration: InputDecoration(labelText: 'Pin 4 (mm)'),
+                  decoration: InputDecoration(hintText: 'Pin 4 (mm)'),
                   keyboardType: TextInputType.number,
                   textInputAction: TextInputAction.done,
                 ),

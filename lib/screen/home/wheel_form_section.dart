@@ -42,7 +42,7 @@ class _WheelFormSectionState extends State<WheelFormSection> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('Wheel', style: fieldLabelStyle),
+          Text('Wheel 1', style: fieldLabelStyle),
           const SizedBox(height: 8),
           Row(
             children: [
@@ -50,7 +50,7 @@ class _WheelFormSectionState extends State<WheelFormSection> {
                 child: TextFormField(
                   controller: _condition1Controller,
                   decoration: InputDecoration(
-                    labelText: 'Wheel 1 Condition (%)',
+                    hintText: 'Wheel 1 Condition (%)',
                   ),
                   keyboardType: TextInputType.number,
                 ),
@@ -60,20 +60,23 @@ class _WheelFormSectionState extends State<WheelFormSection> {
                 child: TextFormField(
                   controller: _psi1Controller,
                   decoration: InputDecoration(
-                    labelText: 'Wheel 1 Pressure (PSI)',
+                    hintText: 'Wheel 1 Pressure (PSI)',
                   ),
                   keyboardType: TextInputType.number,
                 ),
               ),
             ],
           ),
+          const SizedBox(height: 16),
+          Text('Wheel 2', style: fieldLabelStyle),
+          const SizedBox(height: 8),
           Row(
             children: [
               Expanded(
                 child: TextFormField(
                   controller: _condition2Controller,
                   decoration: InputDecoration(
-                    labelText: 'Wheel 2 Condition (%)',
+                    hintText: 'Wheel 2 Condition (%)',
                   ),
                   keyboardType: TextInputType.number,
                 ),
@@ -83,20 +86,23 @@ class _WheelFormSectionState extends State<WheelFormSection> {
                 child: TextFormField(
                   controller: _psi2Controller,
                   decoration: InputDecoration(
-                    labelText: 'Wheel 2 Pressure (PSI)',
+                    hintText: 'Wheel 2 Pressure (PSI)',
                   ),
                   keyboardType: TextInputType.number,
                 ),
               ),
             ],
           ),
+          const SizedBox(height: 16),
+          Text('Wheel 3', style: fieldLabelStyle),
+          const SizedBox(height: 8),
           Row(
             children: [
               Expanded(
                 child: TextFormField(
                   controller: _condition3Controller,
                   decoration: InputDecoration(
-                    labelText: 'Wheel 3 Condition (%)',
+                    hintText: 'Wheel 3 Condition (%)',
                   ),
                   keyboardType: TextInputType.number,
                 ),
@@ -106,20 +112,23 @@ class _WheelFormSectionState extends State<WheelFormSection> {
                 child: TextFormField(
                   controller: _psi3Controller,
                   decoration: InputDecoration(
-                    labelText: 'Wheel 3 Pressure (PSI)',
+                    hintText: 'Wheel 3 Pressure (PSI)',
                   ),
                   keyboardType: TextInputType.number,
                 ),
               ),
             ],
           ),
+          const SizedBox(height: 16),
+          Text('Wheel 4', style: fieldLabelStyle),
+          const SizedBox(height: 8),
           Row(
             children: [
               Expanded(
                 child: TextFormField(
                   controller: _condition4Controller,
                   decoration: InputDecoration(
-                    labelText: 'Wheel 4 Condition (%)',
+                    hintText: 'Wheel 4 Condition (%)',
                   ),
                   keyboardType: TextInputType.number,
                 ),
@@ -129,7 +138,7 @@ class _WheelFormSectionState extends State<WheelFormSection> {
                 child: TextFormField(
                   controller: _psi4Controller,
                   decoration: InputDecoration(
-                    labelText: 'Wheel 4 Pressure (PSI)',
+                    hintText: 'Wheel 4 Pressure (PSI)',
                   ),
                   keyboardType: TextInputType.number,
                 ),
