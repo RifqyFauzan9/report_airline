@@ -11,6 +11,9 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: ThemeData(
+        colorSchemeSeed: Color(0xFF323061),
+      ),
       debugShowCheckedModeBanner: false,
       initialRoute: AppRoute.homeScreen.route,
       routes: routes,
