@@ -35,38 +35,48 @@ class MainApp extends StatelessWidget {
           ).textTheme.labelLarge!.copyWith(fontWeight: FontWeight.bold),
         ),
       ),
-      appBarTheme: AppBarTheme(toolbarHeight: 64),
+      appBarTheme: AppBarTheme(
+        toolbarHeight: 64,
+        backgroundColor: Theme.of(context).colorScheme.primaryContainer,
+        centerTitle: true,
+      ),
       inputDecorationTheme: InputDecorationTheme(
-        filled: true,
+        filled: false,
         fillColor: Colors.white,
         contentPadding: const EdgeInsets.symmetric(
           horizontal: 24,
-          vertical: 18,
+          vertical: 16,
+        ),
+        hintStyle: Theme.of(context).textTheme.bodyMedium!.copyWith(
+          fontWeight: FontWeight.w500,
+          color: Colors.black.withOpacity(0.6),
         ),
         labelStyle: Theme.of(context).textTheme.bodyMedium!.copyWith(
           fontWeight: FontWeight.w500,
-          color: Colors.black.withOpacity(0.5),
+          color: Colors.black.withOpacity(0.6),
         ),
         enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(50),
-          borderSide: BorderSide.none,
+          borderRadius: BorderRadius.circular(10),
+          borderSide: BorderSide(
+            width: 1,
+          ),
         ),
         errorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(50),
+          borderRadius: BorderRadius.circular(10),
           borderSide: BorderSide(
             width: 2,
             color: Theme.of(context).colorScheme.error,
           ),
         ),
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(50),
+          borderRadius: BorderRadius.circular(10),
           borderSide: BorderSide(
             width: 2,
-            color: Theme.of(context).colorScheme.primary,
+
           ),
         ),
         focusedErrorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(50),
+          borderRadius: BorderRadius.circular(10),
           borderSide: BorderSide(
             width: 2,
             color: Theme.of(context).colorScheme.error,
