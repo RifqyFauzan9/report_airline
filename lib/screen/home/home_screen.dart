@@ -4,6 +4,7 @@ import 'package:report_airline/screen/home/pirep_dmi_form_section.dart';
 import 'package:report_airline/screen/home/submit_section.dart';
 import 'package:report_airline/screen/home/wheel_form_section.dart';
 import 'package:report_airline/static/colors.dart';
+import 'package:report_airline/static/size_config.dart';
 
 import 'apu_fak_form_section.dart';
 import 'brake_pin_form_section.dart';
@@ -24,20 +25,11 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'LMCR Form',
-          style: TextStyle(
-            fontWeight: FontWeight.w500,
-            color: Theme.of(context).colorScheme.onPrimaryContainer,
-          ),
-        ),
-      ),
       body: isLoading
           ? Center(
               child: LoadingAnimationWidget.discreteCircle(
                 color: AppColor.primary.color,
-                size: 80,
+                size: getPropScreenWidth(80),
               ),
             )
           : SizedBox(

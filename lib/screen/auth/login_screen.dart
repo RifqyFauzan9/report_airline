@@ -1,6 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:report_airline/static/routes.dart';
+import 'package:report_airline/static/size_config.dart';
+
+import '../../static/colors.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -12,13 +16,14 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
   bool _isObsecurePass = true;
+  bool _isLoading = false;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'LMCR SERVICE CHECK',
+          'LM Control Report',
           style: TextStyle(
             fontWeight: FontWeight.w500,
             color: Theme.of(context).colorScheme.onPrimaryContainer,
@@ -32,7 +37,7 @@ class _LoginScreenState extends State<LoginScreen> {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                SizedBox(height: MediaQuery.sizeOf(context).height * 0.1),
+                SizedBox(height: SizeConfig.screenHeight * 0.12),
                 _logoSection(),
                 const SizedBox(height: 24),
                 _formSection(),
@@ -160,19 +165,27 @@ class _LoginScreenState extends State<LoginScreen> {
             },
           ),
           const SizedBox(height: 16),
-          FilledButton(
-            onPressed: () {
-              if (_formKey.currentState!.validate()) {
-                Navigator.pushNamed(context, AppRoute.homeScreen.route);
-              }
-            },
-            child: const Text('LOGIN'),
-          ),
-          const SizedBox(height: 12),
-          Text(
-            'Forgot Password?',
-            style: Theme.of(context).textTheme.titleMedium,
-          ),
+          _isLoading
+              ? LoadingAnimationWidget.discreteCircle(
+                  color: AppColor.primary.color,
+                  size: getPropScreenWidth(40),
+                )
+              : FilledButton(
+                  onPressed: () {
+                    if (_formKey.currentState!.validate()) {
+                      setState(() => _isLoading = true);
+                      Future.delayed(Duration(milliseconds: 1500), () {
+                        setState(() => _isLoading = false);
+                      }).then(
+                        (_) => Navigator.pushNamed(
+                          context,
+                          AppRoute.homeScreen.route,
+                        ),
+                      );
+                    }
+                  },
+                  child: const Text('LOGIN'),
+                ),
         ],
       ),
     );

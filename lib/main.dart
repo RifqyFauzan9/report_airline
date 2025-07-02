@@ -1,9 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:report_airline/provider/lmcr_provider.dart';
 import 'package:report_airline/static/colors.dart';
 import 'package:report_airline/static/routes.dart';
+import 'package:report_airline/static/size_config.dart';
 
 void main() {
-  runApp(const MainApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => LmcrProvider(),
+      child: const MainApp(),
+    ),
+  );
 }
 
 class MainApp extends StatelessWidget {
@@ -12,6 +20,11 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      title: 'LM Control Report',
+      builder: (context, child) {
+        SizeConfig().init(context);
+        return child!;
+      },
       theme: _lightTheme(context),
       debugShowCheckedModeBanner: false,
       initialRoute: AppRoute.loginScreen.route,
@@ -26,7 +39,7 @@ class MainApp extends StatelessWidget {
       colorSchemeSeed: AppColor.primary.color,
       filledButtonTheme: FilledButtonThemeData(
         style: FilledButton.styleFrom(
-          minimumSize: Size(double.infinity, 56),
+          minimumSize: Size(double.infinity, getPropScreenWidth(48)),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(50),
           ),
@@ -36,16 +49,16 @@ class MainApp extends StatelessWidget {
         ),
       ),
       appBarTheme: AppBarTheme(
-        toolbarHeight: 64,
+        toolbarHeight: getPropScreenWidth(60),
         backgroundColor: Theme.of(context).colorScheme.primaryContainer,
         centerTitle: true,
       ),
       inputDecorationTheme: InputDecorationTheme(
         filled: false,
         fillColor: Colors.white,
-        contentPadding: const EdgeInsets.symmetric(
-          horizontal: 24,
-          vertical: 16,
+        contentPadding: EdgeInsets.symmetric(
+          horizontal: getPropScreenWidth(22),
+          vertical: getPropScreenWidth(14),
         ),
         hintStyle: Theme.of(context).textTheme.bodyMedium!.copyWith(
           fontWeight: FontWeight.w500,
@@ -57,9 +70,7 @@ class MainApp extends StatelessWidget {
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
-          borderSide: BorderSide(
-            width: 1,
-          ),
+          borderSide: BorderSide(width: 1),
         ),
         errorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
@@ -70,10 +81,7 @@ class MainApp extends StatelessWidget {
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
-          borderSide: BorderSide(
-            width: 2,
-
-          ),
+          borderSide: BorderSide(width: 2),
         ),
         focusedErrorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
