@@ -1,5 +1,7 @@
 class LmcrReport {
   String? dateUtc;
+  String? timeReleased;
+  String? releasedBy;
   String? acType;
   String? acReg;
   String? captain;
@@ -36,6 +38,13 @@ class LmcrReport {
       'tirePressure': tirePressure,
       'apuStatus': apuStatus,
       'fak': fak,
+      'releasedBy': releasedBy,
+      'timeReleased': timeReleased,
     };
+  }
+
+  @override
+  String toString() {
+    return 'dateUtc: $dateUtc\nacType: $acType\nacReg: $acReg\notr: $otr\nreleasedBy: $releasedBy\ntimeReleased: $timeReleased\npirep: $pirep\ndmi: $dmi\nengOil: $engOil\nidgOil: $idgOil\ncaptain: $captain\napuOil: $apuOil\nhydFluid: $hydFluid\noxygen: $oxygen\nbrakePins: $brakePins\nwheelCondition: $wheelCondition\ntirePressure: $tirePressure\napuStatus: $apuStatus\nfak: $fak';
   }
 }

@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:provider/provider.dart';
 import 'package:report_airline/screen/home/pirep_dmi_form_section.dart';
 import 'package:report_airline/screen/home/submit_section.dart';
 import 'package:report_airline/screen/home/wheel_form_section.dart';
 import 'package:report_airline/static/colors.dart';
 import 'package:report_airline/static/size_config.dart';
 
+import '../../provider/lmcr_provider.dart';
 import 'apu_fak_form_section.dart';
 import 'brake_pin_form_section.dart';
 import 'fluids_form_section.dart';
@@ -37,7 +39,9 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Stepper(
                 currentStep: _currentStep,
                 onStepContinue: () {
+                  final lmcrProvider = context.read<LmcrProvider>();
                   if (_currentStep < 6) {
+                    debugPrint(lmcrProvider.report.toString());
                     setState(() => _currentStep++);
                   } else {
                     setState(() => isLoading = true);

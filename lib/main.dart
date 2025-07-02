@@ -27,7 +27,7 @@ class MainApp extends StatelessWidget {
       },
       theme: _lightTheme(context),
       debugShowCheckedModeBanner: false,
-      initialRoute: AppRoute.loginScreen.route,
+      initialRoute: AppRoute.splash.route,
       routes: routes,
     );
   }

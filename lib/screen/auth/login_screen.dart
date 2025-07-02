@@ -21,17 +21,9 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'LM Control Report',
-          style: TextStyle(
-            fontWeight: FontWeight.w500,
-            color: Theme.of(context).colorScheme.onPrimaryContainer,
-          ),
-        ),
-      ),
+      appBar: _appBar(context),
       body: Padding(
-        padding: const EdgeInsets.fromLTRB(30, 0, 30, 30),
+        padding: EdgeInsets.fromLTRB(30, 0, 30, 0),
         child: SizedBox(
           width: double.infinity,
           child: SingleChildScrollView(
@@ -41,6 +33,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 _logoSection(),
                 const SizedBox(height: 24),
                 _formSection(),
+                SizedBox(height: SizeConfig.screenHeight * 0.03),
               ],
             ),
           ),
@@ -49,10 +42,27 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
+  AppBar _appBar(BuildContext context) {
+    return AppBar(
+      title: Text(
+        'LM Control Report',
+        style: TextStyle(
+          fontWeight: FontWeight.w500,
+          color: Theme.of(context).colorScheme.onPrimaryContainer,
+        ),
+      ),
+    );
+  }
+
   Row _logoSection() {
     return Row(
       children: [
-        Expanded(child: Image.asset('assets/images/sriwijaya_air_logo.png')),
+        Expanded(
+          child: Hero(
+            tag: 'splash-animation',
+            child: Image.asset('assets/images/sriwijaya_air_logo.png'),
+          ),
+        ),
         Expanded(child: Image.asset('assets/images/nam_air_logo.png')),
       ],
     );
@@ -179,14 +189,46 @@ class _LoginScreenState extends State<LoginScreen> {
                       }).then(
                         (_) => Navigator.pushNamed(
                           context,
-                          AppRoute.homeScreen.route,
+                          AppRoute.chooseCompany.route,
                         ),
                       );
                     }
                   },
                   child: const Text('LOGIN'),
                 ),
+          const SizedBox(height: 12),
+          _termsAndConditionsText(),
         ],
+      ),
+    );
+  }
+
+  Padding _termsAndConditionsText() {
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: getPropScreenWidth(23)),
+      child: RichText(
+        textAlign: TextAlign.center,
+        text: TextSpan(
+          style: Theme.of(context).textTheme.labelLarge,
+          children: [
+            TextSpan(text: 'By signing in, you agree to our '),
+            TextSpan(
+              text: 'Terms',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: AppColor.primary.color,
+              ),
+            ),
+            TextSpan(text: ' And '),
+            TextSpan(
+              text: 'Conditions',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: AppColor.primary.color,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

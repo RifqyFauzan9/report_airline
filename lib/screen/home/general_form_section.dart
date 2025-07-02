@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
+import 'package:report_airline/provider/lmcr_provider.dart';
 
 class GeneralFormSection extends StatefulWidget {
   const GeneralFormSection({super.key});
@@ -30,9 +32,11 @@ class _GeneralFormSectionState extends State<GeneralFormSection> {
 
   @override
   Widget build(BuildContext context) {
+    final lmcrProvider = context.read<LmcrProvider>();
     final TextStyle fieldLabelStyle = Theme.of(
       context,
     ).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.w600);
+
     return Form(
       key: _formKey,
       child: Column(
@@ -43,7 +47,7 @@ class _GeneralFormSectionState extends State<GeneralFormSection> {
           TextFormField(
             controller: _dateUtcController,
             readOnly: true,
-            decoration: InputDecoration(hintText: 'Input Date (UTC)'),
+            decoration: InputDecoration(labelText: 'Input Date (UTC)'),
             onTap: () async {
               final pickedDate = await showDatePicker(
                 context: context,
@@ -52,9 +56,9 @@ class _GeneralFormSectionState extends State<GeneralFormSection> {
                 lastDate: DateTime(2050),
               );
               if (pickedDate != null) {
-                _dateUtcController.text = DateFormat(
-                  'dd MMM yyyy',
-                ).format(pickedDate);
+                final formatted = DateFormat('dd MMM yyyy').format(pickedDate);
+                _dateUtcController.text = formatted;
+                lmcrProvider.updateDateUtc(formatted);
               }
             },
           ),
@@ -66,7 +70,8 @@ class _GeneralFormSectionState extends State<GeneralFormSection> {
             textInputAction: TextInputAction.next,
             textCapitalization: TextCapitalization.sentences,
             controller: _acTypeController,
-            decoration: InputDecoration(hintText: 'Input A/C Type'),
+            decoration: InputDecoration(labelText: 'Input A/C Type'),
+            onChanged: (value) => lmcrProvider.updateAcType(value),
           ),
           const SizedBox(height: 16),
           Text('A/C Reg', style: fieldLabelStyle),
@@ -76,7 +81,8 @@ class _GeneralFormSectionState extends State<GeneralFormSection> {
             textInputAction: TextInputAction.next,
             textCapitalization: TextCapitalization.sentences,
             controller: _acRegController,
-            decoration: InputDecoration(hintText: 'Input A/C Reg'),
+            decoration: InputDecoration(labelText: 'Input A/C Reg'),
+            onChanged: (value) => lmcrProvider.updateAcReg(value),
           ),
           const SizedBox(height: 16),
           Text('OTR', style: fieldLabelStyle),
@@ -86,7 +92,8 @@ class _GeneralFormSectionState extends State<GeneralFormSection> {
             textInputAction: TextInputAction.next,
             textCapitalization: TextCapitalization.sentences,
             controller: _otrController,
-            decoration: InputDecoration(hintText: 'Input OTR'),
+            decoration: InputDecoration(labelText: 'Input OTR'),
+            onChanged: (value) => lmcrProvider.updateOtr(value),
           ),
           const SizedBox(height: 16),
           Text('Released By', style: fieldLabelStyle),
@@ -96,7 +103,8 @@ class _GeneralFormSectionState extends State<GeneralFormSection> {
             textInputAction: TextInputAction.next,
             textCapitalization: TextCapitalization.sentences,
             controller: _releasedByController,
-            decoration: InputDecoration(hintText: 'Input Released By'),
+            decoration: InputDecoration(labelText: 'Input Released By'),
+            onChanged: (value) => lmcrProvider.updateReleasedBy(value),
           ),
           const SizedBox(height: 16),
           Text('Time Released', style: fieldLabelStyle),
@@ -113,12 +121,13 @@ class _GeneralFormSectionState extends State<GeneralFormSection> {
                 lastDate: DateTime(2050),
               );
               if (pickedDate != null) {
-                _timeReleasedController.text = DateFormat(
-                  'dd MMM yyyy',
-                ).format(pickedDate);
+                final formatted = DateFormat('dd MMM yyyy').format(pickedDate);
+                _timeReleasedController.text = formatted;
+                lmcrProvider.updateTimeReleased(formatted);
               }
             },
-            decoration: InputDecoration(hintText: 'Input Time Released'),
+
+            decoration: InputDecoration(labelText: 'Input Time Released'),
           ),
         ],
       ),

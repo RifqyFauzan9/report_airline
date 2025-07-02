@@ -14,6 +14,16 @@ class LmcrProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  void updateReleasedBy(String value) {
+    _report.releasedBy = value;
+    notifyListeners();
+  }
+
+  void updateTimeReleased(String value) {
+    _report.timeReleased = value;
+    notifyListeners();
+  }
+
   void updateAcType(String value) {
     _report.acType = value;
     notifyListeners();

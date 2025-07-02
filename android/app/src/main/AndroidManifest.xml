@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <uses-permission android:name="android.permission.INTERNET" />
     <application
-        android:label="report_airline"
+        android:label="LMCR"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
