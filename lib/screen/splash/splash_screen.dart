@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:report_airline/provider/shared_preferences_provider.dart';
 import 'package:report_airline/static/routes.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -12,10 +14,17 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    Future.delayed(
-      Duration(seconds: 2),
-      () => Navigator.pushReplacementNamed(context, AppRoute.loginScreen.route),
-    );
+    Future.delayed(Duration(seconds: 2), () async {
+      final sharedPreferencesProvider = context
+          .read<SharedPreferencesProvider>();
+      final navigator = Navigator.of(context);
+
+      if (sharedPreferencesProvider.isLogin) {
+        navigator.pushReplacementNamed(AppRoute.chooseCompany.route);
+      } else {
+        navigator.pushReplacementNamed(AppRoute.loginScreen.route);
+      }
+    });
   }
 
   @override

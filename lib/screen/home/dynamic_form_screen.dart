@@ -206,6 +206,7 @@ class _DynamicFormScreenState extends State<DynamicFormScreen> {
           final picked = await showTimePicker(
             context: context,
             initialTime: TimeOfDay.now(),
+            initialEntryMode: TimePickerEntryMode.input,
           );
           if (picked != null) {
             final now = DateTime.now();

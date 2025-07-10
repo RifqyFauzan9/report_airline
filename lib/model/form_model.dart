@@ -30,7 +30,12 @@ final Map<FormType, List<FormFieldModel>> formSchemas = {
   // Sriwijaya
   FormType.sriwijayaServiceCheck: [
     FormFieldModel(label: 'Date (UTC)', key: 'dateUtc', isDatePicker: true),
-    FormFieldModel(label: 'A/C Type', key: 'acType'),
+    FormFieldModel(
+      label: 'A/C Type',
+      key: 'acType',
+      isDropdown: true,
+      dropdownItems: ['B737-500', 'B737-800'],
+    ),
     FormFieldModel(label: 'A/C Reg', key: 'acReg'),
     FormFieldModel(label: 'OTR', key: 'otr'),
     FormFieldModel(label: 'Released By', key: 'releasedBy'),
@@ -71,11 +76,21 @@ final Map<FormType, List<FormFieldModel>> formSchemas = {
 
     FormFieldModel(label: 'F.A.K', key: 'fak', isMultiline: true),
 
-    FormFieldModel(label: 'Station', key: 'station'),
+    FormFieldModel(
+      label: 'Station',
+      key: 'station',
+      isDropdown: true,
+      dropdownItems: ['LM DEPATI AMIR', 'LM NAM-JKT', 'LM NAM-E UPG'],
+    ),
   ],
   FormType.sriwijayaPreDeparture: [
     FormFieldModel(label: 'Date (UTC)', key: 'dateUtc', isDatePicker: true),
-    FormFieldModel(label: 'A/C Type', key: 'acType'),
+    FormFieldModel(
+      label: 'A/C Type',
+      key: 'acType',
+      isDropdown: true,
+      dropdownItems: ['B737-500', 'B737-800'],
+    ),
     FormFieldModel(label: 'A/C Reg', key: 'acReg'),
     FormFieldModel(label: 'OTR', key: 'otr'),
     FormFieldModel(label: 'Released By', key: 'releasedBy'),
@@ -90,7 +105,12 @@ final Map<FormType, List<FormFieldModel>> formSchemas = {
   ],
   FormType.sriwijayaTransit: [
     FormFieldModel(label: 'Date (UTC)', key: 'dateUtc', isDatePicker: true),
-    FormFieldModel(label: 'A/C Type', key: 'acType'),
+    FormFieldModel(
+      label: 'A/C Type',
+      key: 'acType',
+      isDropdown: true,
+      dropdownItems: ['B737-500', 'B737-800'],
+    ),
     FormFieldModel(label: 'A/C Reg', key: 'acReg'),
     FormFieldModel(label: 'Flight Number', key: 'flightNumber'),
     FormFieldModel(label: 'Route', key: 'route'),
@@ -106,13 +126,23 @@ final Map<FormType, List<FormFieldModel>> formSchemas = {
       isDropdown: true,
       dropdownItems: ['SERVICEABLE', 'UNSERVICEABLE'],
     ),
-    FormFieldModel(label: 'Station', key: 'station'),
+    FormFieldModel(
+      label: 'Station',
+      key: 'station',
+      isDropdown: true,
+      dropdownItems: ['LM DEPATI AMIR', 'LM NAM-JKT', 'LM NAM-E UPG'],
+    ),
   ],
 
   // Nam Form Part
   FormType.namDailyInspection: [
     FormFieldModel(label: 'Date (UTC)', key: 'dateUtc', isDatePicker: true),
-    FormFieldModel(label: 'A/C Type', key: 'acType'),
+    FormFieldModel(
+      label: 'A/C Type',
+      key: 'acType',
+      isDropdown: true,
+      dropdownItems: ['B737-500', 'B737-800'],
+    ),
     FormFieldModel(label: 'A/C Reg', key: 'acReg'),
     FormFieldModel(label: 'OTR', key: 'otr'),
     FormFieldModel(label: 'Released By', key: 'releasedBy'),
@@ -153,7 +183,12 @@ final Map<FormType, List<FormFieldModel>> formSchemas = {
 
     FormFieldModel(label: 'F.A.K', key: 'fak', isMultiline: true),
 
-    FormFieldModel(label: 'Station', key: 'station'),
+    FormFieldModel(
+      label: 'Station',
+      key: 'station',
+      isDropdown: true,
+      dropdownItems: ['LM DEPATI AMIR', 'LM NAM-JKT', 'LM NAM-E UPG'],
+    ),
   ],
   FormType.namPreFlight: [
     FormFieldModel(label: 'Date (UTC)', key: 'dateUtc', isDatePicker: true),
@@ -172,7 +207,12 @@ final Map<FormType, List<FormFieldModel>> formSchemas = {
   ],
   FormType.namTransit: [
     FormFieldModel(label: 'Date (UTC)', key: 'dateUtc', isDatePicker: true),
-    FormFieldModel(label: 'A/C Type', key: 'acType'),
+    FormFieldModel(
+      label: 'A/C Type',
+      key: 'acType',
+      isDropdown: true,
+      dropdownItems: ['B737-500', 'B737-800'],
+    ),
     FormFieldModel(label: 'A/C Reg', key: 'acReg'),
     FormFieldModel(label: 'Flight Number', key: 'flightNumber'),
     FormFieldModel(label: 'Route', key: 'route'),
@@ -188,6 +228,11 @@ final Map<FormType, List<FormFieldModel>> formSchemas = {
       isDropdown: true,
       dropdownItems: ['SERVICEABLE', 'UNSERVICEABLE'],
     ),
-    FormFieldModel(label: 'Station', key: 'station'),
+    FormFieldModel(
+      label: 'Station',
+      key: 'station',
+      isDropdown: true,
+      dropdownItems: ['LM DEPATI AMIR', 'LM NAM-JKT', 'LM NAM-E UPG'],
+    ),
   ],
 };

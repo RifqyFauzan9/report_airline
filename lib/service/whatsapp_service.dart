@@ -23,18 +23,18 @@ String _generateTransitMessage(Map<String, String> data, FormType formType) {
   return '''
 *_LMCR ${_formTypeName(formType)} PERFORMED_*
 ```
-DATE : ${data['dateUtc'] ?? ''}
+DATE     : ${data['dateUtc'] ?? ''}
 A/C TYPE : ${data['acType'] ?? ''}
-A/C REG : ${data['acReg'] ?? ''}
-FLT NO : ${data['flightNumber'] ?? ''}
-ROUTE : ${data['route'] ?? ''}
-ETD : ${data['etd'] ?? ''} UTC
-ATD : ${data['atd'] ?? ''} UTC
-PIC : ${data['pic'] ?? ''}
-EOB : ${data['eob'] ?? ''}
-DMI : ${data['dmi']?.isNotEmpty == true ? data['dmi'] : 'NIL'}
+A/C REG  : ${data['acReg'] ?? ''}
+FLT NO   : ${data['flightNumber'] ?? ''}
+ROUTE    : ${data['route'] ?? ''}
+ETD      : ${data['etd'] ?? ''} UTC
+ATD      : ${data['atd'] ?? ''} UTC
+PIC      : ${data['pic'] ?? ''}
+EOB      : ${data['eob'] ?? ''}
+DMI      : ${data['dmi']?.isNotEmpty == true ? data['dmi'] : 'NIL'}
 
-REMARKS : ${data['remarks'] ?? ''}
+REMARKS  : ${data['remarks'] ?? ''}
 ```
 APU STATUS ${data['apuStatus']?.toUpperCase() ?? 'UNKNOWN'}
 

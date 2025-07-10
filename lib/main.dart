@@ -1,19 +1,41 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:report_airline/provider/firebase_auth_provider.dart';
 import 'package:report_airline/provider/lmcr_provider.dart';
+import 'package:report_airline/provider/shared_preferences_provider.dart';
+import 'package:report_airline/service/firebase_auth_service.dart';
+import 'package:report_airline/service/shared_preferences_service.dart';
 import 'package:report_airline/static/colors.dart';
 import 'package:report_airline/static/routes.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+
+  final pref = await SharedPreferences.getInstance();
+  final firebaseAuth = FirebaseAuth.instance;
+
   runApp(
-    ChangeNotifierProvider(
-      create: (context) => LmcrProvider(),
+    MultiProvider(
+      providers: [
+        Provider(create: (context) => FirebaseAuthService(firebaseAuth)),
+        Provider(create: (context) => SharedPreferencesService(pref)),
+
+        ChangeNotifierProvider(create: (context) => LmcrProvider()),
+        ChangeNotifierProvider(
+          create: (context) => SharedPreferencesProvider(
+            context.read<SharedPreferencesService>(),
+          ),
+        ),
+        ChangeNotifierProvider(
+          create: (context) =>
+              FirebaseAuthProvider(context.read<FirebaseAuthService>()),
+        ),
+      ],
       child: const MainApp(),
     ),
   );
@@ -55,10 +77,7 @@ class MainApp extends StatelessWidget {
         centerTitle: true,
       ),
       inputDecorationTheme: InputDecorationTheme(
-        contentPadding: EdgeInsets.symmetric(
-          horizontal: 24,
-          vertical: 13,
-        ),
+        contentPadding: EdgeInsets.symmetric(horizontal: 24, vertical: 13),
         hintStyle: Theme.of(context).textTheme.bodyMedium!.copyWith(
           fontWeight: FontWeight.w500,
           color: Colors.black.withOpacity(0.6),

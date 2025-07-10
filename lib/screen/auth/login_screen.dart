@@ -1,6 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:provider/provider.dart';
+import 'package:report_airline/provider/firebase_auth_provider.dart';
+import 'package:report_airline/provider/shared_preferences_provider.dart';
+import 'package:report_airline/static/firebase_auth_status.dart';
 import 'package:report_airline/static/routes.dart';
 
 import '../../static/colors.dart';
@@ -15,7 +19,8 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
   bool _isObsecurePass = true;
-  bool _isLoading = false;
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -39,6 +44,13 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _emailController.dispose();
+    _passwordController.dispose();
   }
 
   AppBar _appBar(BuildContext context) {
@@ -78,6 +90,7 @@ class _LoginScreenState extends State<LoginScreen> {
       child: Column(
         children: [
           TextFormField(
+            controller: _emailController,
             textInputAction: TextInputAction.next,
             textCapitalization: TextCapitalization.sentences,
             keyboardType: TextInputType.emailAddress,
@@ -121,6 +134,7 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
           const SizedBox(height: 16),
           TextFormField(
+            controller: _passwordController,
             textInputAction: TextInputAction.done,
             textCapitalization: TextCapitalization.sentences,
             keyboardType: TextInputType.visiblePassword,
@@ -184,12 +198,15 @@ class _LoginScreenState extends State<LoginScreen> {
             },
           ),
           const SizedBox(height: 16),
-          _isLoading
-              ? LoadingAnimationWidget.discreteCircle(
-                  color: AppColor.primary.color,
-                  size: 32,
-                )
-              : FilledButton(
+          Consumer<FirebaseAuthProvider>(
+            builder: (context, value, child) {
+              return switch (value.authStatus) {
+                FirebaseAuthStatus.authenticating =>
+                  LoadingAnimationWidget.discreteCircle(
+                    color: AppColor.primary.color,
+                    size: 32,
+                  ),
+                _ => FilledButton(
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
                       _tapToLogin();
@@ -197,6 +214,9 @@ class _LoginScreenState extends State<LoginScreen> {
                   },
                   child: const Text('LOGIN'),
                 ),
+              };
+            },
+          ),
           const SizedBox(height: 12),
           _termsAndConditionsText(),
         ],
@@ -204,11 +224,26 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  void _tapToLogin() {
-    setState(() => _isLoading = true);
-    Future.delayed(Duration(milliseconds: 1500), () {
-      setState(() => _isLoading = false);
-    }).then((_) => Navigator.pushNamed(context, AppRoute.chooseCompany.route));
+  void _tapToLogin() async {
+    final email = _emailController.text;
+    final password = _passwordController.text;
+
+    final firebaseAuthProvider = context.read<FirebaseAuthProvider>();
+    final sharedPreferencesProvider = context.read<SharedPreferencesProvider>();
+    final navigator = Navigator.of(context);
+
+    await firebaseAuthProvider.signInUser(email, password);
+    switch (firebaseAuthProvider.authStatus) {
+      case FirebaseAuthStatus.authenticated:
+        await sharedPreferencesProvider.login();
+        navigator.pushReplacementNamed(AppRoute.chooseCompany.route);
+      case _:
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(firebaseAuthProvider.message ?? 'Failed to login'),
+          ),
+        );
+    }
   }
 
   Widget _termsAndConditionsText() {
