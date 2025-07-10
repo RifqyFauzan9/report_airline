@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:report_airline/static/routes.dart';
-import 'package:report_airline/static/size_config.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -22,12 +21,16 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Theme.of(context).colorScheme.primaryContainer,
       body: Center(
         child: Padding(
-          padding: EdgeInsets.all(getPropScreenWidth(64)),
+          padding: EdgeInsets.all(104),
           child: Hero(
             tag: 'splash-animation',
-            child: Image.asset('assets/images/sriwijaya_air_logo.png'),
+            child: Image.asset(
+              'assets/images/airplane-icon.png',
+              color: Theme.of(context).colorScheme.onPrimaryContainer,
+            ),
           ),
         ),
       ),

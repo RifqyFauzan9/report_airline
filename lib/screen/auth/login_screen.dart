@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:report_airline/static/routes.dart';
-import 'package:report_airline/static/size_config.dart';
 
 import '../../static/colors.dart';
 
@@ -29,11 +28,11 @@ class _LoginScreenState extends State<LoginScreen> {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                SizedBox(height: SizeConfig.screenHeight * 0.12),
+                SizedBox(height: MediaQuery.sizeOf(context).height * 0.12),
                 _logoSection(),
                 const SizedBox(height: 24),
                 _formSection(),
-                SizedBox(height: SizeConfig.screenHeight * 0.03),
+                SizedBox(height: MediaQuery.sizeOf(context).height * 0.03),
               ],
             ),
           ),
@@ -44,6 +43,16 @@ class _LoginScreenState extends State<LoginScreen> {
 
   AppBar _appBar(BuildContext context) {
     return AppBar(
+      leading: Padding(
+        padding: const EdgeInsets.all(6.0),
+        child: Hero(
+          tag: 'splash-animation',
+          child: Image.asset(
+            'assets/images/airplane-icon.png',
+            color: Theme.of(context).colorScheme.onPrimaryContainer,
+          ),
+        ),
+      ),
       title: Text(
         'LM Control Report',
         style: TextStyle(
@@ -57,12 +66,7 @@ class _LoginScreenState extends State<LoginScreen> {
   Row _logoSection() {
     return Row(
       children: [
-        Expanded(
-          child: Hero(
-            tag: 'splash-animation',
-            child: Image.asset('assets/images/sriwijaya_air_logo.png'),
-          ),
-        ),
+        Expanded(child: Image.asset('assets/images/sriwijaya_air_logo.png')),
         Expanded(child: Image.asset('assets/images/nam_air_logo.png')),
       ],
     );
@@ -173,25 +177,22 @@ class _LoginScreenState extends State<LoginScreen> {
               }
               return null;
             },
+            onFieldSubmitted: (value) {
+              if (_formKey.currentState!.validate()) {
+                _tapToLogin();
+              }
+            },
           ),
           const SizedBox(height: 16),
           _isLoading
               ? LoadingAnimationWidget.discreteCircle(
                   color: AppColor.primary.color,
-                  size: getPropScreenWidth(40),
+                  size: 32,
                 )
               : FilledButton(
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
-                      setState(() => _isLoading = true);
-                      Future.delayed(Duration(milliseconds: 1500), () {
-                        setState(() => _isLoading = false);
-                      }).then(
-                        (_) => Navigator.pushNamed(
-                          context,
-                          AppRoute.chooseCompany.route,
-                        ),
-                      );
+                      _tapToLogin();
                     }
                   },
                   child: const Text('LOGIN'),
@@ -203,32 +204,36 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  Padding _termsAndConditionsText() {
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: getPropScreenWidth(23)),
-      child: RichText(
-        textAlign: TextAlign.center,
-        text: TextSpan(
-          style: Theme.of(context).textTheme.labelLarge,
-          children: [
-            TextSpan(text: 'By signing in, you agree to our '),
-            TextSpan(
-              text: 'Terms',
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                color: AppColor.primary.color,
-              ),
+  void _tapToLogin() {
+    setState(() => _isLoading = true);
+    Future.delayed(Duration(milliseconds: 1500), () {
+      setState(() => _isLoading = false);
+    }).then((_) => Navigator.pushNamed(context, AppRoute.chooseCompany.route));
+  }
+
+  Widget _termsAndConditionsText() {
+    return RichText(
+      textAlign: TextAlign.center,
+      text: TextSpan(
+        style: Theme.of(context).textTheme.labelLarge!.copyWith(fontSize: 13),
+        children: [
+          TextSpan(text: 'By signing in, you agree to our '),
+          TextSpan(
+            text: 'Terms',
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              color: AppColor.primary.color,
             ),
-            TextSpan(text: ' And '),
-            TextSpan(
-              text: 'Conditions',
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                color: AppColor.primary.color,
-              ),
+          ),
+          TextSpan(text: ' And '),
+          TextSpan(
+            text: 'Conditions',
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              color: AppColor.primary.color,
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

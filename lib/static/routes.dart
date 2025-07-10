@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:report_airline/screen/auth/login_screen.dart';
 import 'package:report_airline/screen/choose_company/choose_company.dart';
-import 'package:report_airline/screen/choose_form/choose_main_form.dart';
-import 'package:report_airline/screen/home/home_screen.dart';
+import 'package:report_airline/screen/home/dynamic_form_screen.dart';
 import 'package:report_airline/screen/splash/splash_screen.dart';
+import 'package:report_airline/static/form_type.dart';
 
 enum AppRoute {
   splash('/'),
   loginScreen('/login'),
-  homeScreen('/home'),
+  mainScreen('/main'),
   chooseCompany('/chooseCompany'),
   chooseMainForm('/chooseMainForm'),
   namChooseForm('/namChooseForm'),
@@ -21,9 +21,8 @@ enum AppRoute {
 Map<String, WidgetBuilder> routes = {
   AppRoute.splash.route: (context) => SplashScreen(),
   AppRoute.loginScreen.route: (context) => LoginScreen(),
-  AppRoute.homeScreen.route: (context) => HomeScreen(),
+  AppRoute.mainScreen.route: (context) => DynamicFormScreen(
+    formType: ModalRoute.of(context)?.settings.arguments as FormType,
+  ),
   AppRoute.chooseCompany.route: (context) => ChooseCompanyScreen(),
-  AppRoute.chooseMainForm.route: (context) => ChooseMainFormScreen(),
-  AppRoute.namChooseForm.route: (context) => ChooseMainFormScreen(),
-  AppRoute.sriwijayaChooseForm.route: (context) => ChooseMainFormScreen(),
 };

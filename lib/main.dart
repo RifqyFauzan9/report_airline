@@ -3,9 +3,14 @@ import 'package:provider/provider.dart';
 import 'package:report_airline/provider/lmcr_provider.dart';
 import 'package:report_airline/static/colors.dart';
 import 'package:report_airline/static/routes.dart';
-import 'package:report_airline/static/size_config.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(
     ChangeNotifierProvider(
       create: (context) => LmcrProvider(),
@@ -21,10 +26,6 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'LM Control Report',
-      builder: (context, child) {
-        SizeConfig().init(context);
-        return child!;
-      },
       theme: _lightTheme(context),
       debugShowCheckedModeBanner: false,
       initialRoute: AppRoute.splash.route,
@@ -39,7 +40,7 @@ class MainApp extends StatelessWidget {
       colorSchemeSeed: AppColor.primary.color,
       filledButtonTheme: FilledButtonThemeData(
         style: FilledButton.styleFrom(
-          minimumSize: Size(double.infinity, getPropScreenWidth(48)),
+          minimumSize: Size(double.infinity, 48),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(50),
           ),
@@ -49,16 +50,14 @@ class MainApp extends StatelessWidget {
         ),
       ),
       appBarTheme: AppBarTheme(
-        toolbarHeight: getPropScreenWidth(60),
+        toolbarHeight: 60,
         backgroundColor: Theme.of(context).colorScheme.primaryContainer,
         centerTitle: true,
       ),
       inputDecorationTheme: InputDecorationTheme(
-        filled: false,
-        fillColor: Colors.white,
         contentPadding: EdgeInsets.symmetric(
-          horizontal: getPropScreenWidth(22),
-          vertical: getPropScreenWidth(14),
+          horizontal: 24,
+          vertical: 13,
         ),
         hintStyle: Theme.of(context).textTheme.bodyMedium!.copyWith(
           fontWeight: FontWeight.w500,

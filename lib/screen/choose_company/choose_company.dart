@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:report_airline/static/colors.dart';
+import 'package:report_airline/static/form_type.dart';
 import 'package:report_airline/static/routes.dart';
-import 'package:report_airline/static/size_config.dart';
 
 class ChooseCompanyScreen extends StatelessWidget {
   const ChooseCompanyScreen({super.key});
@@ -20,33 +20,70 @@ class ChooseCompanyScreen extends StatelessWidget {
         ),
       ),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 30),
+        padding: const EdgeInsets.all(25),
         child: SingleChildScrollView(
-          child: SizedBox(
-            width: double.infinity,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(height: SizeConfig.screenHeight * 0.1),
-                CompanyCard(
-                  onTap: () => Navigator.pushNamed(
-                    context,
-                    AppRoute.homeScreen.route,
+          child: Column(
+            children: [
+              CompanyCard(
+                companyName: 'Sriwijaya Air',
+                companyLogo: 'assets/images/sriwijaya_air_logo.png',
+                labels: [
+                  CompanyLabel(label: 'SERVICE CHECK', onTap: () {
+                    Navigator.pushNamed(
+                      context,
+                      AppRoute.mainScreen.route,
+                      arguments: FormType.sriwijayaServiceCheck,
+                    );
+                  }),
+                  CompanyLabel(
+                    label: 'PRE-DEPARTURE CHECK',
+                    onTap: () {
+                      Navigator.pushNamed(
+                        context,
+                        AppRoute.mainScreen.route,
+                        arguments: FormType.sriwijayaPreDeparture,
+                      );
+                    },
                   ),
-                  companyName: 'Sriwijaya Air',
-                  companyLogo: 'assets/images/sriwijaya_air_logo.png',
-                ),
-                SizedBox(height: SizeConfig.screenHeight * 0.03),
-                CompanyCard(
-                  onTap: () => Navigator.pushNamed(
-                    context,
-                    AppRoute.homeScreen.route,
-                  ),
-                  companyName: 'NAM Air',
-                  companyLogo: 'assets/images/nam_air_logo.png',
-                ),
-              ],
-            ),
+                  CompanyLabel(label: 'TRANSIT CHECK', onTap: () {
+                    Navigator.pushNamed(
+                      context,
+                      AppRoute.mainScreen.route,
+                      arguments: FormType.sriwijayaTransit,
+                    );
+                  }),
+                ],
+              ),
+              SizedBox(height: MediaQuery.sizeOf(context).height * 0.03),
+              CompanyCard(
+                companyName: 'NAM Air',
+                companyLogo: 'assets/images/nam_air_logo.png',
+                labels: [
+                  CompanyLabel(label: 'DAILY INSPECTION CHECK', onTap: () {
+                    Navigator.pushNamed(
+                      context,
+                      AppRoute.mainScreen.route,
+                      arguments: FormType.namDailyInspection,
+                    );
+                  }),
+                  CompanyLabel(label: 'PRE-FLIGHT CHECK', onTap: () {
+                    Navigator.pushNamed(
+                      context,
+                      AppRoute.mainScreen.route,
+                      arguments: FormType.namPreFlight,
+                    );
+                  }),
+                  CompanyLabel(label: 'TRANSIT CHECK', onTap: () {
+                    Navigator.pushNamed(
+                      context,
+                      AppRoute.mainScreen.route,
+                      arguments: FormType.namTransit,
+                    );
+                  }),
+                ],
+              ),
+              const SizedBox(height: 16),
+            ],
           ),
         ),
       ),
@@ -59,36 +96,41 @@ class CompanyCard extends StatelessWidget {
     super.key,
     required this.companyName,
     required this.companyLogo,
-    required this.onTap,
+    required this.labels,
   });
 
   final String companyName, companyLogo;
-  final VoidCallback onTap;
+  final List<CompanyLabel> labels;
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
+    return InkWell(
+      onTap: () {},
+      borderRadius: BorderRadius.circular(20),
       child: Container(
-        padding: const EdgeInsets.all(5),
+        padding: const EdgeInsets.all(8),
         decoration: BoxDecoration(
           color: Theme.of(context).colorScheme.primaryContainer,
           borderRadius: BorderRadius.circular(20),
         ),
-        child: Column(
-          children: [
-            buildContent(context),
-            const SizedBox(height: 10),
-            Text(
-              '$companyName Form',
-              style: Theme.of(context).textTheme.labelLarge!.copyWith(
-                fontWeight: FontWeight.w500,
-                color: AppColor.primary.color.withOpacity(0.6),
-                letterSpacing: 1.5,
+        child: SizedBox(
+          width: double.infinity,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              buildContent(context),
+              const SizedBox(height: 10),
+              Text(
+                '$companyName Form',
+                style: Theme.of(context).textTheme.labelLarge!.copyWith(
+                  fontWeight: FontWeight.w500,
+                  color: AppColor.primary.color.withOpacity(0.6),
+                  letterSpacing: 1.5,
+                ),
               ),
-            ),
-            const SizedBox(height: 10),
-          ],
+              const SizedBox(height: 10),
+            ],
+          ),
         ),
       ),
     );
@@ -96,67 +138,25 @@ class CompanyCard extends StatelessWidget {
 
   Container buildContent(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
+      padding: const EdgeInsets.fromLTRB(16, 16, 16, 10),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(20),
       ),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              ConstrainedBox(
-                constraints: BoxConstraints(
-                  maxHeight: 50,
-                  minHeight: 50,
-                  maxWidth: 50,
-                  minWidth: 50,
-                ),
-                child: Image.asset(companyLogo, fit: BoxFit.cover),
-              ),
-              const SizedBox(width: 8),
-              Text(
-                companyName,
-                style: Theme.of(
-                  context,
-                ).textTheme.labelLarge!.copyWith(fontWeight: FontWeight.bold),
-              ),
-            ],
+          ConstrainedBox(
+            constraints: BoxConstraints(
+              maxHeight: 110,
+              minHeight: 110,
+              maxWidth: 110,
+              minWidth: 110,
+            ),
+            child: Image.asset(companyLogo, fit: BoxFit.cover),
           ),
-          SizedBox(height: SizeConfig.screenHeight * 0.01),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                '$companyName form',
-                style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                  fontWeight: FontWeight.w600,
-                  color: AppColor.primary.color,
-                ),
-              ),
-              const SizedBox(height: 2),
-              Text(
-                'Active Form: 3',
-                style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                  fontWeight: FontWeight.w500,
-                  color: AppColor.primary.color.withOpacity(0.6),
-                ),
-              ),
-            ],
-          ),
-          SizedBox(height: SizeConfig.screenHeight * 0.02),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              CompanyLabel(label: 'AIRLINE'),
-              const SizedBox(width: 8),
-              CompanyLabel(label: 'LMCR'),
-              const SizedBox(width: 8),
-              CompanyLabel(label: 'FORM'),
-            ],
-          ),
+          SizedBox(height: MediaQuery.sizeOf(context).height * 0.015),
+          ...labels.map((l) => l),
         ],
       ),
     );
@@ -164,26 +164,30 @@ class CompanyCard extends StatelessWidget {
 }
 
 class CompanyLabel extends StatelessWidget {
-  const CompanyLabel({super.key, required this.label});
+  const CompanyLabel({super.key, required this.label, required this.onTap});
 
   final String label;
+  final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(8),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
-        border: Border.all(
-          width: 1,
-          color: AppColor.primary.color.withOpacity(0.3),
-        ),
-      ),
-      child: Text(
-        label,
-        style: Theme.of(context).textTheme.labelMedium!.copyWith(
-          fontWeight: FontWeight.bold,
-          color: AppColor.primary.color,
+    return InkWell(
+      onTap: onTap,
+      child: SizedBox(
+        width: double.infinity,
+        child: Card(
+          margin: const EdgeInsets.symmetric(vertical: 6),
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Text(
+              label,
+              style: Theme.of(context).textTheme.labelMedium!.copyWith(
+                fontWeight: FontWeight.bold,
+                color: AppColor.primary.color,
+              ),
+              textAlign: TextAlign.center,
+            ),
+          ),
         ),
       ),
     );

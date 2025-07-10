@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:report_airline/provider/lmcr_provider.dart';
 
 class PirepDmiFormSection extends StatefulWidget {
   const PirepDmiFormSection({super.key});
@@ -18,6 +20,11 @@ class _PirepDmiFormSectionState extends State<PirepDmiFormSection> {
   void initState() {
     super.initState();
     _dmiController.text = 'NIL';
+
+    Future.microtask(() {
+      final provider = context.read<LmcrProvider>();
+      provider.updateDmi(_dmiController.text);
+    });
   }
 
   @override
@@ -25,6 +32,8 @@ class _PirepDmiFormSectionState extends State<PirepDmiFormSection> {
     final TextStyle fieldLabelStyle = Theme.of(
       context,
     ).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.w600);
+    final provider = context.read<LmcrProvider>();
+    
     return Form(
       key: _formKey,
       child: Column(
@@ -39,7 +48,8 @@ class _PirepDmiFormSectionState extends State<PirepDmiFormSection> {
             minLines: 3,
             maxLines: 3,
             controller: _pirepController,
-            decoration: InputDecoration(hintText: 'Input PIREP'),
+            decoration: InputDecoration(labelText: 'Input PIREP'),
+            onChanged: (value) => provider.updatePirep(value),
           ),
           const SizedBox(height: 16),
           Text('ACTION', style: fieldLabelStyle),
@@ -51,7 +61,8 @@ class _PirepDmiFormSectionState extends State<PirepDmiFormSection> {
             minLines: 3,
             maxLines: 3,
             controller: _actionController,
-            decoration: InputDecoration(hintText: 'Input ACTION'),
+            decoration: InputDecoration(labelText: 'Input ACTION'),
+            onChanged: (value) => provider.updateAction(value),
           ),
           const SizedBox(height: 16),
           Text('DMI', style: fieldLabelStyle),
@@ -61,7 +72,8 @@ class _PirepDmiFormSectionState extends State<PirepDmiFormSection> {
             textInputAction: TextInputAction.done,
             keyboardType: TextInputType.text,
             controller: _dmiController,
-            decoration: InputDecoration(hintText: 'Input DMI'),
+            decoration: InputDecoration(labelText: 'Input DMI'),
+            onChanged: (value) => provider.updateDmi(value),
           ),
         ],
       ),

@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:report_airline/provider/lmcr_provider.dart';
 
 class ApuFakFormSection extends StatefulWidget {
   const ApuFakFormSection({super.key});
@@ -14,7 +16,6 @@ class _ApuFakFormSectionState extends State<ApuFakFormSection> {
   final _fakMwController = TextEditingController();
 
   final List<String> items = ['Serviceable', 'Unserviceable'];
-  String selectedItem = 'Serviceable';
 
   @override
   void dispose() {
@@ -28,6 +29,8 @@ class _ApuFakFormSectionState extends State<ApuFakFormSection> {
     final TextStyle fieldLabelStyle = Theme.of(
       context,
     ).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.w600);
+    final provider = context.read<LmcrProvider>();
+
     return Form(
       key: _formKey,
       child: Column(
@@ -37,14 +40,14 @@ class _ApuFakFormSectionState extends State<ApuFakFormSection> {
           const SizedBox(height: 8),
           DropdownButtonFormField(
             icon: Icon(CupertinoIcons.chevron_down),
-            value: selectedItem,
+            decoration: InputDecoration(
+              labelText: 'Serviceable / Unserviceable',
+            ),
             items: ['Serviceable', 'Unserviceable'].map((serv) {
               return DropdownMenuItem(value: serv, child: Text(serv));
             }).toList(),
             onChanged: (value) {
-              setState(() {
-                selectedItem = value!;
-              });
+              provider.updateApuStatus(value!);
             },
           ),
           const SizedBox(height: 16),
@@ -55,18 +58,20 @@ class _ApuFakFormSectionState extends State<ApuFakFormSection> {
               Expanded(
                 child: TextFormField(
                   controller: _fakMwController,
-                  textInputAction: TextInputAction.next,
-                  decoration: InputDecoration(hintText: 'F.A.K M/W (EA)'),
+                  decoration: InputDecoration(labelText: 'F.A.K M/W (EA)'),
                   keyboardType: TextInputType.number,
+                  textInputAction: TextInputAction.next,
+                  onChanged: (value) => provider.updateFakMw(int.tryParse(value) ?? 0),
                 ),
               ),
               SizedBox(width: 16),
               Expanded(
                 child: TextFormField(
                   controller: _fakNwController,
+                  decoration: InputDecoration(labelText: 'F.A.K N/W (EA)'),
                   textInputAction: TextInputAction.done,
-                  decoration: InputDecoration(hintText: 'F.A.K N/W (EA)'),
                   keyboardType: TextInputType.number,
+                  onChanged: (value) => provider.updateFakNw(int.tryParse(value) ?? 0),
                 ),
               ),
             ],

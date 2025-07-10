@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:report_airline/provider/lmcr_provider.dart';
 
 class BrakePinFormSection extends StatefulWidget {
   const BrakePinFormSection({super.key});
@@ -28,6 +30,8 @@ class _BrakePinFormSectionState extends State<BrakePinFormSection> {
     final TextStyle fieldLabelStyle = Theme.of(
       context,
     ).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.w600);
+    final provider = context.read<LmcrProvider>();
+
     return Form(
       key: _formKey,
       child: Column(
@@ -40,18 +44,24 @@ class _BrakePinFormSectionState extends State<BrakePinFormSection> {
               Expanded(
                 child: TextFormField(
                   controller: _pin1Controller,
-                  decoration: InputDecoration(hintText: 'Pin 1 (mm)'),
+                  decoration: InputDecoration(labelText: 'Pin 1 (mm)'),
                   textInputAction: TextInputAction.next,
                   keyboardType: TextInputType.number,
+                  onChanged: (value) => provider.updatePin1(
+                    double.tryParse(value) ?? 0.0
+                  ),
                 ),
               ),
-              const SizedBox(width: 8),
+              const SizedBox(width: 16),
               Expanded(
                 child: TextFormField(
                   controller: _pin2Controller,
-                  decoration: InputDecoration(hintText: 'Pin 2 (mm)'),
+                  decoration: InputDecoration(labelText: 'Pin 2 (mm)'),
                   keyboardType: TextInputType.number,
                   textInputAction: TextInputAction.next,
+                  onChanged: (value) => provider.updatePin2(
+                    double.tryParse(value) ?? 0.0
+                  ),
                 ),
               ),
             ],
@@ -62,18 +72,20 @@ class _BrakePinFormSectionState extends State<BrakePinFormSection> {
               Expanded(
                 child: TextFormField(
                   controller: _pin3Controller,
-                  decoration: InputDecoration(hintText: 'Pin 3 (mm)'),
+                  decoration: InputDecoration(labelText: 'Pin 3 (mm)'),
                   keyboardType: TextInputType.number,
                   textInputAction: TextInputAction.next,
+                  onChanged: (value) => provider.updatePin3(double.tryParse(value) ?? 0.0),
                 ),
               ),
-              const SizedBox(width: 8),
+              const SizedBox(width: 16),
               Expanded(
                 child: TextFormField(
                   controller: _pin4Controller,
-                  decoration: InputDecoration(hintText: 'Pin 4 (mm)'),
+                  decoration: InputDecoration(labelText: 'Pin 4 (mm)'),
                   keyboardType: TextInputType.number,
                   textInputAction: TextInputAction.done,
+                  onChanged: (value) => provider.updatePin4(double.tryParse(value) ?? 0.0),
                 ),
               ),
             ],

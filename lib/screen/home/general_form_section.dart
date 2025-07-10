@@ -58,7 +58,7 @@ class _GeneralFormSectionState extends State<GeneralFormSection> {
               if (pickedDate != null) {
                 final formatted = DateFormat('dd MMM yyyy').format(pickedDate);
                 _dateUtcController.text = formatted;
-                lmcrProvider.updateDateUtc(formatted);
+                lmcrProvider.updateDateUtc(pickedDate);
               }
             },
           ),
@@ -114,18 +114,27 @@ class _GeneralFormSectionState extends State<GeneralFormSection> {
             controller: _timeReleasedController,
             readOnly: true,
             onTap: () async {
-              final pickedDate = await showDatePicker(
+              final pickedTime = await showTimePicker(
                 context: context,
-                initialDate: DateTime.now(),
-                firstDate: DateTime(2020),
-                lastDate: DateTime(2050),
+                initialTime: TimeOfDay.now(),
               );
-              if (pickedDate != null) {
-                final formatted = DateFormat('dd MMM yyyy').format(pickedDate);
+
+              if (pickedTime != null) {
+                final now = DateTime.now();
+                final pickedDateTime = DateTime(
+                  now.year,
+                  now.month,
+                  now.day,
+                  pickedTime.hour,
+                  pickedTime.minute,
+                );
+
+                final formatted = DateFormat('HH:mm').format(pickedDateTime);
                 _timeReleasedController.text = formatted;
-                lmcrProvider.updateTimeReleased(formatted);
+                lmcrProvider.updateTimeReleased(pickedDateTime);
               }
             },
+
 
             decoration: InputDecoration(labelText: 'Input Time Released'),
           ),

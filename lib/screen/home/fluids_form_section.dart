@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:report_airline/provider/lmcr_provider.dart';
 
 class FluidsFormSection extends StatefulWidget {
   const FluidsFormSection({super.key});
@@ -37,6 +39,8 @@ class _FluidsFormSectionState extends State<FluidsFormSection> {
     final TextStyle fieldLabelStyle = Theme.of(
       context,
     ).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.w600);
+    final provider = context.read<LmcrProvider>();
+
     return Form(
       key: _formKey,
       child: Column(
@@ -50,11 +54,12 @@ class _FluidsFormSectionState extends State<FluidsFormSection> {
                 child: TextFormField(
                   controller: _engController,
                   textInputAction: TextInputAction.next,
-                  keyboardType: TextInputType.text,
-                  textCapitalization: TextCapitalization.sentences,
+                  keyboardType: TextInputType.number,
                   decoration: InputDecoration(
-                    hintText: 'ENG OIL Before (QRT)',
+                    labelText: 'ENG OIL Before (QRT)',
                   ),
+                  onChanged: (value) =>
+                      provider.updateEngOilBefore(int.tryParse(value) ?? 0),
                 ),
               ),
               SizedBox(width: 16),
@@ -62,9 +67,10 @@ class _FluidsFormSectionState extends State<FluidsFormSection> {
                 child: TextFormField(
                   controller: _oilEngController,
                   textInputAction: TextInputAction.next,
-                  keyboardType: TextInputType.text,
-                  textCapitalization: TextCapitalization.sentences,
-                  decoration: InputDecoration(hintText: 'ENG OIL After (QRT)'),
+                  keyboardType: TextInputType.number,
+                  decoration: InputDecoration(labelText: 'ENG OIL After (QRT)'),
+                  onChanged: (value) =>
+                      provider.updateEngOilAfter(int.tryParse(value) ?? 0),
                 ),
               ),
             ],
@@ -78,11 +84,12 @@ class _FluidsFormSectionState extends State<FluidsFormSection> {
                 child: TextFormField(
                   controller: _idgController,
                   textInputAction: TextInputAction.next,
-                  keyboardType: TextInputType.text,
-                  textCapitalization: TextCapitalization.sentences,
+                  keyboardType: TextInputType.number,
                   decoration: InputDecoration(
-                    hintText: 'IDG OIL Before (QRT)',
+                    labelText: 'IDG OIL Before (QRT)',
                   ),
+                  onChanged: (value) =>
+                      provider.updateIdgOilBefore(int.tryParse(value) ?? 0),
                 ),
               ),
               SizedBox(width: 16),
@@ -90,9 +97,10 @@ class _FluidsFormSectionState extends State<FluidsFormSection> {
                 child: TextFormField(
                   controller: _oilIdgController,
                   textInputAction: TextInputAction.next,
-                  keyboardType: TextInputType.text,
-                  textCapitalization: TextCapitalization.sentences,
-                  decoration: InputDecoration(hintText: 'IDG OIL After (QRT)'),
+                  keyboardType: TextInputType.number,
+                  decoration: InputDecoration(labelText: 'IDG OIL After (QRT)'),
+                  onChanged: (value) =>
+                      provider.updateIdgOilAfter(int.tryParse(value) ?? 0),
                 ),
               ),
             ],
@@ -103,9 +111,10 @@ class _FluidsFormSectionState extends State<FluidsFormSection> {
           TextFormField(
             controller: _apuOilController,
             textInputAction: TextInputAction.next,
-            keyboardType: TextInputType.text,
-            textCapitalization: TextCapitalization.sentences,
-            decoration: InputDecoration(hintText: 'APU OIL (QRT)'),
+            keyboardType: TextInputType.number,
+            decoration: InputDecoration(labelText: 'APU OIL (QRT)'),
+            onChanged: (value) =>
+                provider.updateApuOil(int.tryParse(value) ?? 0),
           ),
           const SizedBox(height: 16),
           Text('HYD FLUID', style: fieldLabelStyle),
@@ -116,11 +125,12 @@ class _FluidsFormSectionState extends State<FluidsFormSection> {
                 child: TextFormField(
                   controller: _hydController,
                   textInputAction: TextInputAction.next,
-                  keyboardType: TextInputType.text,
-                  textCapitalization: TextCapitalization.sentences,
+                  keyboardType: TextInputType.number,
                   decoration: InputDecoration(
-                    hintText: 'HYD FLUID Before (QRT)',
+                    labelText: 'HYD FLUID Before (QRT)',
                   ),
+                  onChanged: (value) =>
+                      provider.updateHydFluidBefore(int.tryParse(value) ?? 0),
                 ),
               ),
               SizedBox(width: 16),
@@ -128,11 +138,12 @@ class _FluidsFormSectionState extends State<FluidsFormSection> {
                 child: TextFormField(
                   controller: _fluidController,
                   textInputAction: TextInputAction.next,
-                  keyboardType: TextInputType.text,
-                  textCapitalization: TextCapitalization.sentences,
+                  keyboardType: TextInputType.number,
                   decoration: InputDecoration(
-                    hintText: 'HYD FLUID After (QRT)',
+                    labelText: 'HYD FLUID After (QRT)',
                   ),
+                  onChanged: (value) =>
+                      provider.updateHydFluidAfter(int.tryParse(value) ?? 0),
                 ),
               ),
             ],
@@ -142,10 +153,11 @@ class _FluidsFormSectionState extends State<FluidsFormSection> {
           const SizedBox(height: 8),
           TextFormField(
             textInputAction: TextInputAction.done,
-            keyboardType: TextInputType.text,
-            textCapitalization: TextCapitalization.sentences,
+            keyboardType: TextInputType.number,
             controller: _oxygenPsiController,
-            decoration: InputDecoration(hintText: 'Input OXYGEN PSI'),
+            decoration: InputDecoration(labelText: 'Input OXYGEN PSI'),
+            onChanged: (value) =>
+                provider.updateOxygen(int.tryParse(value)?.toDouble() ?? 0),
           ),
         ],
       ),

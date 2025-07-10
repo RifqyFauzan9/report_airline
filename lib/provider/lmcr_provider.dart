@@ -3,13 +3,15 @@ import 'package:flutter/material.dart';
 import '../model/lmcr_report.dart';
 
 class LmcrProvider with ChangeNotifier {
-  final LmcrReport _report = LmcrReport();
+  final LmcrReport _report = LmcrReport(
+
+  );
 
   LmcrReport get report => _report;
 
   // =================== UPDATE FIELDS ===================
 
-  void updateDateUtc(String value) {
+  void updateDateUtc(DateTime value) {
     _report.dateUtc = value;
     notifyListeners();
   }
@@ -19,8 +21,13 @@ class LmcrProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  void updateTimeReleased(String value) {
+  void updateTimeReleased(DateTime value) {
     _report.timeReleased = value;
+    notifyListeners();
+  }
+
+  void updateAction(String value) {
+    _report.action = value;
     notifyListeners();
   }
 
@@ -31,11 +38,6 @@ class LmcrProvider with ChangeNotifier {
 
   void updateAcReg(String value) {
     _report.acReg = value;
-    notifyListeners();
-  }
-
-  void updateCaptain(String value) {
-    _report.captain = value;
     notifyListeners();
   }
 
@@ -54,43 +56,80 @@ class LmcrProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  void updateEngOil(String value) {
-    _report.engOil = value;
+  void updateEngOilBefore(int value) {
+    _report.engOilBefore = value;
     notifyListeners();
   }
 
-  void updateIdgOil(String value) {
-    _report.idgOil = value;
+  void updateEngOilAfter(int value) {
+    _report.engOilAfter = value;
     notifyListeners();
   }
 
-  void updateApuOil(String value) {
+  void updateIdgOilBefore(int value) {
+    _report.idgOilBefore = value;
+    notifyListeners();
+  }
+
+  void updateIdgOilAfter(int value) {
+    _report.idgOilAfter = value;
+    notifyListeners();
+  }
+
+  void updateApuOil(int value) {
     _report.apuOil = value;
     notifyListeners();
   }
 
-  void updateHydFluid(String value) {
-    _report.hydFluid = value;
+  void updateHydFluidBefore(int value) {
+    _report.hydFluidBefore = value;
     notifyListeners();
   }
 
-  void updateOxygen(String value) {
+  void updateHydFluidAfter(int value) {
+    _report.hydFluidAfter = value;
+    notifyListeners();
+  }
+
+  void updateOxygen(double value) {
     _report.oxygen = value;
     notifyListeners();
   }
 
-  void updateBrakePins(List<String> pins) {
-    _report.brakePins = pins;
+  // Brake Pins
+  double _pin1 = 0.0;
+  double _pin2 = 0.0;
+  double _pin3 = 0.0;
+  double _pin4 = 0.0;
+
+  void updatePin1(double val) {
+    _pin1 = val;
+    _updateBrakePins();
+  }
+
+  void updatePin2(double val) {
+    _pin2 = val;
+    _updateBrakePins();
+  }
+
+  void updatePin3(double val) {
+    _pin3 = val;
+    _updateBrakePins();
+  }
+
+  void updatePin4(double val) {
+    _pin4 = val;
+    _updateBrakePins();
+  }
+
+  void _updateBrakePins() {
+    _report.brakePins = [_pin1, _pin2, _pin3, _pin4];
     notifyListeners();
   }
 
-  void updateWheelCondition(Map<String, String> condition) {
+
+  void updateWheelCondition(Map<String, int> condition) {
     _report.wheelCondition = condition;
-    notifyListeners();
-  }
-
-  void updateTirePressure(Map<String, String> pressure) {
-    _report.tirePressure = pressure;
     notifyListeners();
   }
 
@@ -99,8 +138,32 @@ class LmcrProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  void updateFak(String value) {
-    _report.fak = value;
+  // APU F.A.K
+  int _fakMw  = 0;
+  int _fakNw  = 0;
+
+  void updateFakMw(int value) {
+    _fakMw = value;
+    _updateApuFak();
+  }
+
+  void updateFakNw(int value) {
+    _fakNw = value;
+    _updateApuFak();
+  }
+
+  void _updateApuFak() {
+    _report.fak = [_fakMw, _fakNw];
+    notifyListeners();
+  }
+
+  void updatePerformedServiceCode(String value) {
+    _report.performedServiceCode = value;
+    notifyListeners();
+  }
+
+  void updateSignedByOrUnit(String value) {
+    _report.signedByOrUnit = value;
     notifyListeners();
   }
 
@@ -111,18 +174,19 @@ class LmcrProvider with ChangeNotifier {
       ..dateUtc = null
       ..acType = null
       ..acReg = null
-      ..captain = null
       ..otr = null
       ..pirep = null
       ..dmi = null
-      ..engOil = null
-      ..idgOil = null
+      ..engOilBefore = null
+      ..engOilAfter = null
+      ..idgOilBefore = null
+      ..idgOilAfter = null
       ..apuOil = null
-      ..hydFluid = null
+      ..hydFluidBefore = null
+      ..hydFluidAfter = null
       ..oxygen = null
       ..brakePins = []
       ..wheelCondition = {}
-      ..tirePressure = {}
       ..apuStatus = null
       ..fak = null;
 

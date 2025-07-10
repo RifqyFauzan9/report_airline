@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:report_airline/provider/lmcr_provider.dart';
 
 class SubmitSection extends StatefulWidget {
   const SubmitSection({super.key});
@@ -13,7 +15,6 @@ class _SubmitSectionState extends State<SubmitSection> {
   final _refFormController = TextEditingController();
 
   final List<String> signers = ['LM NAM-E UPG', 'LM NAM-JKT', 'LM NAM-SUB'];
-  String selectedSigner = 'LM NAM-E UPG';
 
   @override
   void dispose() {
@@ -25,6 +26,10 @@ class _SubmitSectionState extends State<SubmitSection> {
   void initState() {
     super.initState();
     _refFormController.text = 'REF FORM TE-028 REV.10';
+    Future.microtask(() {
+      final provider = context.read<LmcrProvider>();
+      provider.updatePerformedServiceCode(_refFormController.text);
+    });
   }
 
   @override
@@ -32,6 +37,8 @@ class _SubmitSectionState extends State<SubmitSection> {
     final TextStyle fieldLabelStyle = Theme.of(
       context,
     ).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.w600);
+    final provider = context.read<LmcrProvider>();
+
     return Form(
       key: _formKey,
       child: Column(
@@ -43,16 +50,14 @@ class _SubmitSectionState extends State<SubmitSection> {
           const SizedBox(height: 16),
           DropdownButtonFormField<String>(
             icon: Icon(CupertinoIcons.chevron_down),
-            decoration: InputDecoration(hintText: 'Signed By / Unit'),
+            decoration: InputDecoration(labelText: 'Signed By / Unit'),
             items: signers
                 .map(
                   (value) => DropdownMenuItem(value: value, child: Text(value)),
                 )
                 .toList(),
             onChanged: (value) {
-              setState(() {
-                selectedSigner = value!;
-              });
+             provider.updateSignedByOrUnit(value!);
             },
           ),
         ],
